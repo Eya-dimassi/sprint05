@@ -5,14 +5,19 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+
 import com.eya.pays.entities.Pays;
 import com.eya.pays.repos.PaysRepository;
+import com.eya.pays.service.PaysService;
 
 @SpringBootTest
 class PaysProjApplicationTests {
 
     @Autowired
     private PaysRepository paysRepository;
+    @Autowired
+    private PaysService paysService;
 
     // **Test to Create a New Pays Record**
     @Test
@@ -51,5 +56,19 @@ class PaysProjApplicationTests {
         for (Pays p : paysList) {
             System.out.println(p);
         }
+    }
+    @Test
+    public void testFindByNomPaysContains() {
+    	Page<Pays> paysPage = paysService.getAllPaysParPage(0, 2);
+        System.out.println(paysPage.getSize());
+        System.out.println(paysPage.getTotalElements());
+        System.out.println(paysPage.getTotalPages());
+        
+        paysPage.getContent().forEach(p -> System.out.println(p.toString()));
+        
+        // Alternative approach
+        /* for (Pays p : paysPage) {
+            System.out.println(p);
+        } */
     }
 }
