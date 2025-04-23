@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <meta charset="utf-8">
+    <title>Modifier Pays</title>
+</head>
+<body>
+    <div th:replace="template"></div>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                Modifier des Pays
+            </div>
+            <div class="card-body">
+                <form th:action="@{savePays}" method="post">
+                    <div class="form-group">
+                        <label class="control-label" hidden>ID Pays :</label>
+                        <input type="hidden" name="idPays" class="form-control" th:value="${pays.idPays}" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Nom Pays :</label>
+                        <input type="text" name="nomPays" class="form-control" th:value="${pays.nomPays}" />
+                        <span th:errors="${pays.nomPays}" class="text-danger"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Continent :</label>
+                        <input type="text" name="continent" class="form-control" th:value="${pays.continent}" />
+                        <span th:errors="${pays.continent}" class="text-danger"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Population :</label>
+                        <input type="number" name="population" class="form-control" th:value="${pays.population}" />
+                        <span th:errors="${pays.population}" class="text-danger"> </span>
+                    </div>
+                    <!-- Independence Date Field -->
+                    <div class="form-group">
+                        <label class="control-label">Date d'Indépendance :</label>
+                        <input type="date" name="independenceDate" class="form-control" th:value="${#dates.format(pays.independenceDate, 'yyyy-MM-dd')}" />
+                        <span th:errors="${pays.independenceDate}" class="text-danger"> </span>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

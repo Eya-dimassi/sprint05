@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 
+import com.eya.pays.entities.Classification;
 import com.eya.pays.entities.Pays;
 import com.eya.pays.repos.PaysRepository;
 import com.eya.pays.service.PaysService;
@@ -57,18 +58,60 @@ class PaysProjApplicationTests {
             System.out.println(p);
         }
     }
+    
+    @Test
+    public void testFindByNomPays() {
+        List<Pays> paysList = paysRepository.findByNomPays("Tunisie");
+        for (Pays p : paysList) {
+            System.out.println(p);
+        }
+    }
     @Test
     public void testFindByNomPaysContains() {
-    	Page<Pays> paysPage = paysService.getAllPaysParPage(0, 2);
-        System.out.println(paysPage.getSize());
-        System.out.println(paysPage.getTotalElements());
-        System.out.println(paysPage.getTotalPages());
-        
-        paysPage.getContent().forEach(p -> System.out.println(p.toString()));
-        
-        // Alternative approach
-        /* for (Pays p : paysPage) {
+        List<Pays> paysList = paysRepository.findByNomPaysContains("Tuni");
+        for (Pays p : paysList) {
             System.out.println(p);
-        } */
+        }
     }
+    @Test
+    public void testFindByNomEtPop() {
+        List<Pays> paysList = paysRepository.findByNomEtPop("a", 10000000L);
+        for (Pays p : paysList) {
+            System.out.println(p);
+        }
+    }
+    @Test
+    public void testFindByClassification() {
+        Classification c = new Classification();
+        c.setIdClass(1L); 
+
+        List<Pays> paysList = paysRepository.findByClassification(c);
+        for (Pays p : paysList) {
+            System.out.println(p);
+        }
+    }
+    @Test
+    public void testFindByClassificationIdClass() {
+        List<Pays> paysList = paysRepository.findByClassificationIdClass(1L);
+        for (Pays p : paysList) {
+            System.out.println(p);
+        }
+    }
+    @Test
+    public void testFindByOrderByNomPaysAsc() {
+        List<Pays> paysList = paysRepository.findByOrderByNomPaysAsc();
+        for (Pays p : paysList) {
+            System.out.println(p);
+        }
+    }
+    @Test
+    public void testTrierPaysNomsClassifications() {
+        List<Pays> paysList = paysRepository.trierPaysNomsClassifications();
+        for (Pays p : paysList) {
+            System.out.println(p);
+        }
+    }
+
+
+
 }

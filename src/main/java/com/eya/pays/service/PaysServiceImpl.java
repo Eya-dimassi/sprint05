@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import com.eya.pays.entities.Classification;
 import com.eya.pays.entities.Pays;
+import com.eya.pays.repos.ClassificationRepository;
 import com.eya.pays.repos.PaysRepository;
 
 @Service
@@ -46,6 +49,42 @@ public class PaysServiceImpl implements PaysService {
     @Override
     public Page<Pays> getAllPaysParPage(int page, int size) {
         return paysRepository.findAll(PageRequest.of(page, size));
+    }
+    @Override
+    public List<Pays> findByNomPays(String nom) {
+        return paysRepository.findByNomPays(nom);
+    }
+
+    @Override
+    public List<Pays> findByNomPaysContains(String nom) {
+        return paysRepository.findByNomPaysContains(nom);
+    }
+
+    @Override
+    public List<Pays> findByClassification(Classification classification) {
+        return paysRepository.findByClassification(classification);
+    }
+
+    @Override
+    public List<Pays> findByClassificationIdClass(Long id) {
+        return paysRepository.findByClassificationIdClass(id);
+    }
+
+    @Override
+    public List<Pays> findByOrderByNomPaysAsc() {
+        return paysRepository.findByOrderByNomPaysAsc();
+    }
+
+    @Override
+    public List<Pays> trierPaysNomsClassifications() {
+        return paysRepository.trierPaysNomsClassifications();
+    }
+    @Autowired
+    private ClassificationRepository classificationRepository;
+
+    @Override
+    public List<Classification> getAllClassifications() {
+        return classificationRepository.findAll();
     }
 
 }

@@ -11,6 +11,7 @@
 </head>
 
 <body>
+	<div th:fragment="header"> 
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand -->
         <a class="navbar-brand" href="#">Gestion Pays</a>
@@ -46,7 +47,7 @@
             </li>
         </ul>
     </nav>
-
+	</div>
     <!-- Where your pages will inject their content -->
     <div layout:fragment="content"></div>
 </body>
