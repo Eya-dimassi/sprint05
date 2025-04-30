@@ -57,7 +57,7 @@
 				        </option>
 				    </select>
 
-				    <!-- Si la classification est vide (mode new ou pays sans classification) -->
+				 
 				    <select name="classification" class="form-control"
 				            th:if="${#strings.isEmpty(pays.classification)}">
 				        <option th:each="c : ${classifications}" 

@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eya.pays.dto.PaysDTO;
 import com.eya.pays.entities.Pays;
 import com.eya.pays.service.PaysService;
 
@@ -19,15 +21,18 @@ import com.eya.pays.service.PaysService;
 public class PaysRESTController {
 	@Autowired
     PaysService paysService;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Pays> getAllPays() {
+	@GetMapping
+    public List<PaysDTO> getAllPays() {
         return paysService.getAllPays();
     }
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Pays getPaysById(@PathVariable("id") Long id) {
+
+    @GetMapping("/{id}")
+    public PaysDTO getPaysById(@PathVariable("id") Long id) {
         return paysService.getPays(id);
     }
+
+   
+   
     @RequestMapping(method = RequestMethod.POST)
     public Pays createPays(@RequestBody Pays pays) {
         return paysService.savePays(pays);  

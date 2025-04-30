@@ -38,11 +38,11 @@
                             <td th:if="${p.classification != null}" th:text="${p.classification.nomClass}"></td>
                             <td th:if="${p.classification == null}">Pas de Classification</td>
                             <td>
-                                <a class="btn btn-success"
+                                <a sec:authorize="hasAnyAuthority('ADMIN', 'AGENT')" class="btn btn-success"
                                    th:href="@{modifierPays(id=${p.idPays}, page=${currentPage}, size=${size})}">
                                    Editer
                                 </a>
-                                <a class="btn btn-danger"
+                                <a sec:authorize="hasAnyAuthority('ADMIN', 'AGENT')" class="btn btn-danger"
                                    onclick="return confirm('Etes-vous sûr ?')"
                                    th:href="@{supprimerPays(id=${p.idPays}, page=${currentPage}, size=${size})}">
                                    Supprimer

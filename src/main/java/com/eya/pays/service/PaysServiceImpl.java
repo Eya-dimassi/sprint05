@@ -1,11 +1,13 @@
 package com.eya.pays.service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.eya.pays.dto.PaysDTO;
 import com.eya.pays.entities.Classification;
 import com.eya.pays.entities.Pays;
 import com.eya.pays.repos.ClassificationRepository;
@@ -17,10 +19,7 @@ public class PaysServiceImpl implements PaysService {
     PaysRepository paysRepository;
     
 
-    @Override
-    public Pays savePays(Pays p) {
-        return paysRepository.save(p);
-    }
+   
 
     @Override
     public Pays updatePays(Pays p) {
@@ -37,15 +36,9 @@ public class PaysServiceImpl implements PaysService {
         paysRepository.deleteById(id);
     }
 
-    @Override
-    public Pays getPays(Long id) {
-        return paysRepository.findById(id).get();
-    }
+   
 
-    @Override
-    public List<Pays> getAllPays() {
-        return paysRepository.findAll();
-    }
+   
     @Override
     public Page<Pays> getAllPaysParPage(int page, int size) {
         return paysRepository.findAll(PageRequest.of(page, size));
@@ -85,6 +78,34 @@ public class PaysServiceImpl implements PaysService {
     @Override
     public List<Classification> getAllClassifications() {
         return classificationRepository.findAll();
+    }
+    @Override
+    public PaysDTO savePays(Pays p) {
+        return convertEntityToDto(paysRepository.save(p));
+    }
+
+    @Override
+    public PaysDTO getPays(Long id) {
+        return convertEntityToDto(paysRepository.findById(id).get());
+    }
+
+    @Override
+    public List<PaysDTO> getAllPays() {
+        return paysRepository.findAll()
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public PaysDTO convertEntityToDto(Pays pays) {
+        return PaysDTO.builder()
+                .idPays(pays.getIdPays())
+                .nomPays(pays.getNomPays())
+                .population(pays.getPopulation())
+                .continent(pays.getContinent())
+                .independenceDate(pays.getIndependenceDate())
+                .classification(pays.getClassification())
+                .build();
     }
 
 }
