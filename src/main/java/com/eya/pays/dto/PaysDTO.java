@@ -19,5 +19,6 @@ public class PaysDTO {
     private String continent;
     private Date independenceDate;
     private Classification classification;
+    private String nomClass;
 
 }

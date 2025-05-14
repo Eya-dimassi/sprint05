@@ -1,4 +1,4 @@
-package com.eya.pays.controllers;
+/*package com.eya.pays.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -126,4 +126,4 @@ public class PaysController {
         return "index";
     }
 
-}
+}*/

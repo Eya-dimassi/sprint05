@@ -2,6 +2,8 @@ package com.eya.pays.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +20,8 @@ public class PaysServiceImpl implements PaysService {
     @Autowired
     PaysRepository paysRepository;
     
-
+    @Autowired
+    ModelMapper modelMapper;
    
 
     @Override
@@ -79,10 +82,7 @@ public class PaysServiceImpl implements PaysService {
     public List<Classification> getAllClassifications() {
         return classificationRepository.findAll();
     }
-    @Override
-    public PaysDTO savePays(Pays p) {
-        return convertEntityToDto(paysRepository.save(p));
-    }
+ 
 
     @Override
     public PaysDTO getPays(Long id) {
@@ -97,16 +97,29 @@ public class PaysServiceImpl implements PaysService {
                 .collect(Collectors.toList());
     }
     @Override
-    public PaysDTO convertEntityToDto(Pays pays) {
-        return PaysDTO.builder()
-                .idPays(pays.getIdPays())
-                .nomPays(pays.getNomPays())
-                .population(pays.getPopulation())
-                .continent(pays.getContinent())
-                .independenceDate(pays.getIndependenceDate())
-                .classification(pays.getClassification())
-                .build();
+    public PaysDTO savePays(PaysDTO p) {
+        Pays pays = convertDtoToEntity(p); 
+        Pays saved = paysRepository.save(pays); 
+        return convertEntityToDto(saved); 
     }
+
+    @Override
+    public PaysDTO updatePays(PaysDTO p) {
+        Pays pays = convertDtoToEntity(p);
+        Pays updated = paysRepository.save(pays);
+        return convertEntityToDto(updated);
+    }
+    @Override
+    public PaysDTO convertEntityToDto(Pays pays) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(pays, PaysDTO.class);
+    }
+    @Override
+    public Pays convertDtoToEntity(PaysDTO paysDTO) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(paysDTO, Pays.class);
+    }
+
 
 }
 
