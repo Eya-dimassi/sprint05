@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.eya.pays.entities.Classification;
 @RepositoryRestResource(path = "class")
-@CrossOrigin("http://localhost:4200/") 
+@CrossOrigin("http://localhost:4200/")
 public interface ClassificationRepository extends JpaRepository<Classification, Long> {
 	
 

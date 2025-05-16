@@ -23,42 +23,38 @@ public class PaysRESTController {
   
 
    
-    @GetMapping
+    @RequestMapping(path="all",method = RequestMethod.GET)
     public List<PaysDTO> getAllPays() {
         return paysService.getAllPays();
     }
 
    
-    @GetMapping("/{id}")
+    @RequestMapping(value="/getbyid/{id}",method = RequestMethod.GET)
     public PaysDTO getPaysById(@PathVariable("id") Long id) {
         return paysService.getPays(id);
     }
 
     
-    @RequestMapping(method = RequestMethod.POST)
-
+    
+    @RequestMapping(path="/addpays",method = RequestMethod.POST)
     public PaysDTO createPays(@RequestBody PaysDTO paysDTO) {
         return paysService.savePays(paysDTO);
     }
-    @RequestMapping(method = RequestMethod.PUT)
-
+    
+    @RequestMapping(path="/updatepays",method = RequestMethod.PUT)
     public PaysDTO updatePays(@RequestBody PaysDTO paysDTO) {
         return paysService.updatePays(paysDTO);
     }
 
-    @DeleteMapping("/{id}")
+    @RequestMapping(value="/delpays/{id}",method = RequestMethod.DELETE)
     public void deletePays(@PathVariable("id") Long id) {
         paysService.deletePaysById(id);
     }
-    @GetMapping("/classifications")
-    public List<Classification> getAllClassifications() {
-        return paysService.getAllClassifications();
-    }
-    // Get countries by classification
    
-    @GetMapping("/paysclass/{idClass}")
+   
+    @RequestMapping(value="/paysclass/{idClass}",method = RequestMethod.GET)
     public List<Pays> getPaysByClassificationId(@PathVariable("idClass") Long idClass) {
-        return paysService.findByClassificationIdClass(idClass); // Return List<Pays>
+        return paysService.findByClassificationIdClass(idClass); 
     }
 }
 
